@@ -100,3 +100,24 @@ Favoriting Stories - Flow
 2. User should be able to mark stars next to story
 3. Upon star "on", app is:
 
+
+# Testing in the console
+
+
+```js
+const {  Story, StoryList, User, BASE_URL } = await import("./js/models.js")
+
+let currStoryList = new StoryList
+
+let currentUser = new User({"createdAt": "2024-04-18T17:46:02.094Z",
+		"favorites": [],
+		"name": "Test User",
+		"stories": [],
+		"updatedAt": "2024-04-18T17:46:02.094Z",
+		"username": "test106"})
+
+let newStory = await currStoryList.addStory(currentUser,
+  {title: "Test", author: "Me", url: "http://meow.com"});
+
+"loginToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMDYiLCJpYXQiOjE3MTM0NjIzNjJ9.4V-Gz9x7wVbpQny_jStJswVpiF385IUWS3iV73HcA_4",
+```
