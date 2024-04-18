@@ -84,35 +84,33 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  //get user instance token (needed to post story)
-  //POST fetch request => method: POST, body: JSON stringify newStory
-  //create object containing token and story object
-  //pass object into JSON.stringify method in the body
-  /* const resp = await fetch(
-    `${BASE_URL}/stories`,
-    {
-      method: "POST",
-      body: JSON.stringify(tokenStoryObject),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }); 
-  */
 
   async addStory(user, newStory) {
+
+    //get user instance token (needed to post story)
     const token = user.loginToken;
     const tokenStoryObject = { token, story: newStory }; // => {token: "USER_TOKEN", story{...}}
+
+    //POST fetch request => method: POST, body: JSON stringify newStory
     const response = await fetch(
       `${BASE_URL}/stories`,
       {
         method: "POST",
+        //pass object into JSON.stringify method in the body
         body: JSON.stringify(tokenStoryObject),
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-    return response;
+    //create object containing token and story object
+    const addedStory = await response.json();
+
+    console.log(addedStory);
+
+    const story = new Story(addedStory);
+
+    return story;
   }
 }
 
@@ -172,7 +170,7 @@ class User {
   }
 
   /** Login in user with API, make User instance & return it.
-  
+
 
      * - username: an existing user's username
      * - password: an existing user's password
