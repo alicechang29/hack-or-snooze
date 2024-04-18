@@ -41,6 +41,9 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li>
+            <a class="nav-link" href="#" id="nav-SubmitStory">Submit Story</a>
+          </li>
         </ul>
         <ul class="navbar-nav me-2 my-lg-0">
           <li id="Nav-login" class="nav-item">
@@ -57,6 +60,25 @@
     </div>
 
   </nav>
+
+  <div class="container d-none" id="submitStoryForm">
+    <form action="">
+      <div class="row">
+        Author
+        <input type="text" placeholder="Author" id="storyFormAuthor">
+      </div>
+      <div class="row">
+        Title
+        <input type="text" placeholder="Title" id="storyFormTitle">
+      </div>
+      <div class="row">
+        URL
+        <input type="url" placeholder="URL" id="storyFormURL">
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitStoryBtn">Post Story</button>
+    </form>
+
+  </div>
 
   <div class="container mb-5">
 
