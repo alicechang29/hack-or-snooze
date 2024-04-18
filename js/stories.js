@@ -7,7 +7,6 @@ import {
 } from "./dom";
 import { Story, StoryList } from "./models";
 import { currentUser } from "./user";
-import { navAllStories } from "./nav";
 
 export let currStoryList;
 
