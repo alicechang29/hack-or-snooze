@@ -2,9 +2,12 @@
 import {
   $allStoriesList,
   $storiesLoadingMsg,
+  $storyFormBtn,
+  $storyForm
 } from "./dom";
 import { Story, StoryList } from "./models";
 import { currentUser } from "./user";
+import { navAllStories } from "./nav";
 
 export let currStoryList;
 
@@ -73,3 +76,21 @@ export async function fetchAndShowStoriesOnStart() {
 
   putStoriesOnPage();
 }
+
+
+//get form data from input fields
+//call addStory
+//call navAllStories
+
+export async function submitNewStory() {
+  const qs = $storyForm.querySelector.bind($storyForm);
+  const author = qs("#storyFormAuthor").value;
+  const title = qs("#storyFormTitle").value;
+  const url = qs("#storyFormURL").value;
+  const newStoryObj = { author, title, url };
+
+  currStoryList.addStory(currentUser, newStoryObj);
+  putStoriesOnPage();
+}
+
+$storyFormBtn.addEventListener("click", submitNewStory);

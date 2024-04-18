@@ -105,9 +105,7 @@ class StoryList {
 
     //create object containing token and story object
     const addedStory = await response.json();
-
     console.log(addedStory);
-
     const story = new Story(addedStory);
 
     return story;

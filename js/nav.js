@@ -9,6 +9,8 @@ import {
   $navUserProfile,
   $loginForm,
   $signupForm,
+  $submitBtn,
+  $storyForm
 } from "./dom";
 import { hidePageComponents } from "./main";
 import {
@@ -50,3 +52,10 @@ export function updateNavOnLogin() {
   $navUserProfile.classList.remove("d-none");
   $navUserProfile.querySelector("a").innerHTML = `${currentUser.username}`;
 }
+
+export function showNewStoryForm() {
+  hidePageComponents();
+  $storyForm.classList.remove('d-none');
+}
+
+$submitBtn.addEventListener("click", showNewStoryForm);
