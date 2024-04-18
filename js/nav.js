@@ -9,7 +9,7 @@ import {
   $navUserProfile,
   $loginForm,
   $signupForm,
-  $submitBtn,
+  $navAddStory,
   $storyForm
 } from "./dom";
 import { hidePageComponents } from "./main";
@@ -47,6 +47,7 @@ export function updateNavOnLogin() {
   console.debug("updateNavOnLogin");
 
   $navLogin.classList.add("d-none");
+  $navAddStory.classList.remove("d-none");
 
   $navLogOut.classList.remove("d-none");
   $navUserProfile.classList.remove("d-none");
@@ -58,4 +59,4 @@ export function showNewStoryForm() {
   $storyForm.classList.remove('d-none');
 }
 
-$submitBtn.addEventListener("click", showNewStoryForm);
+$navAddStory.addEventListener("click", showNewStoryForm);
