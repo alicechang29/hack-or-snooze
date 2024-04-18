@@ -37,7 +37,8 @@ class Story {
 
   getHostName() {
     // FIXME: complete this function!
-    return "hostname.com";  }
+    return "hostname.com";
+  }
 }
 
 /******************************************************************************
@@ -83,8 +84,35 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  //get user instance token (needed to post story)
+  //POST fetch request => method: POST, body: JSON stringify newStory
+  //create object containing token and story object
+  //pass object into JSON.stringify method in the body
+  /* const resp = await fetch(
+    `${BASE_URL}/stories`,
+    {
+      method: "POST",
+      body: JSON.stringify(tokenStoryObject),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }); 
+  */
+
+  async addStory(user, newStory) {
+    const token = user.loginToken;
+    const tokenStoryObject = { token, story: newStory }; // => {token: "USER_TOKEN", story{...}}
+    const response = await fetch(
+      `${BASE_URL}/stories`,
+      {
+        method: "POST",
+        body: JSON.stringify(tokenStoryObject),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+    return response;
   }
 }
 
