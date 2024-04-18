@@ -16,4 +16,4 @@ export const $navLogin = document.querySelector("#Nav-login");
 export const $navUserProfile = document.querySelector("#Nav-userProfile");
 export const $navLogOut = document.querySelector("#Nav-logout");
 export const $navAllStories = document.querySelector("#Nav-all");
-export const $submitBtn = document.querySelector('#nav-SubmitStory');
+export const $navAddStory = document.querySelector('#nav-SubmitStory');
