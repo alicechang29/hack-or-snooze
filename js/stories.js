@@ -22,6 +22,7 @@ export let currStoryList;
  * Returns DOM object for the story.
  */
 
+//
 export function generateStoryMarkup(story) {
   console.debug("generateStoryMarkup", story);
 
@@ -34,13 +35,17 @@ export function generateStoryMarkup(story) {
   $li.id = story.storyId;
   $li.classList.add("Story", "mt-2");
   $li.innerHTML = `
+      <small class="Story-star"><i class="bi bi-star"></i></small>
       <a href="${story.url}" target="a_blank" class="Story-link">
         ${story.title}
       </a>
       <small class="Story-hostname text-muted">(${hostName})</small>
       <small class="Story-author">by ${story.author}</small>
       <small class="Story-user d-block">posted by ${story.username}</small>
+      
     `;
+  //if a user is logged in, add unfilled star symbol next to each story in list
+  // currentUser ? add the star : dont add the star
   return $li;
 }
 
