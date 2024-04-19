@@ -7,6 +7,7 @@ import {
 } from "./dom";
 import { Story, StoryList } from "./models";
 import { currentUser } from "./user";
+import { hidePageComponents } from "./main";
 
 export let currStoryList;
 
@@ -22,7 +23,7 @@ export let currStoryList;
  */
 
 export function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+  console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
 
@@ -77,9 +78,11 @@ export async function fetchAndShowStoriesOnStart() {
 }
 
 
-//get form data from input fields
-//call addStory
-//call navAllStories
+/** Gets values from the story form
+ * Creates a story instance that is added to the currStoryList
+ *
+ * Adds new story to the DOM
+*/
 
 export async function submitNewStory() {
   const qs = $storyForm.querySelector.bind($storyForm);
@@ -88,8 +91,20 @@ export async function submitNewStory() {
   const url = qs("#storyFormURL").value;
   const newStoryObj = { author, title, url };
 
-  currStoryList.addStory(currentUser, newStoryObj);
-  putStoriesOnPage();
+  const createdStory = await currStoryList.addStory(currentUser, newStoryObj);
+  console.log({ createdStory });
+
+  currStoryList.stories.push(createdStory);
+
+  //displaying the new story on the page
+  const $markupCreatedStory = generateStoryMarkup(createdStory);
+  console.log($markupCreatedStory);
+  $allStoriesList.prepend($markupCreatedStory);
+
+  // hide all components and reveal the story list
+  hidePageComponents();
+  $allStoriesList.classList.remove("d-none");
+
 }
 
 $storyFormBtn.addEventListener("click", submitNewStory);
