@@ -81,9 +81,9 @@ export async function fetchAndShowStoriesOnStart() {
 
 
 /** Gets values from the story form
- * Creates a story instance that is added to the currStoryList
- *
- * Adds new story to the DOM
+ *  Calls generateStoryMarkup, adds the new story to the DOM 
+ *  Clears form input values upon form submission
+ *  Hides all page components, reveals story list
 */
 
 export async function submitNewStory() {
@@ -91,22 +91,24 @@ export async function submitNewStory() {
   const author = qs("#storyFormAuthor").value;
   const title = qs("#storyFormTitle").value;
   const url = qs("#storyFormURL").value;
-  const newStoryObj = { author, title, url };
+  const storyData = { author, title, url };
 
-  const createdStory = await currStoryList.addStory(currentUser, newStoryObj);
+  console.log("storyForm", $storyForm);
+
+  const createdStory = await currStoryList.addStory(currentUser, storyData);
   console.log({ createdStory });
-
-  currStoryList.stories.push(createdStory);
 
   //displaying the new story on the page
   const $markupCreatedStory = generateStoryMarkup(createdStory);
   console.log($markupCreatedStory);
   $allStoriesList.prepend($markupCreatedStory);
 
+  //reset form fields on submission
+  $storyForm.querySelector("form").reset();
+
   // hide all components and reveal the story list
   hidePageComponents();
   $allStoriesList.classList.remove("d-none");
-
 }
 
-$storyFormBtn.addEventListener("click", submitNewStory);
+$storyForm.addEventListener("submit", submitNewStory);
