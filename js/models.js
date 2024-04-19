@@ -287,6 +287,8 @@ class User {
     return updatedUser.message;
   }
 
+  /** returns true/false if the story instance exists in the user's favorites list
+   */
   isFavorite(story) {
     for (let i = 0; i < this.favorites.length; i++) {
       if (this.favorites[i].storyId === story.storyId) {
