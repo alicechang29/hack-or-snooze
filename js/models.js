@@ -226,7 +226,7 @@ class User {
   }
 
   /**Passing a story argument into the addFavoriteStory fn
-   * send a PATCH request to update the User instance
+   * send a POST request to update the User instance
    * with the updated favorite story
    */
   async addFavoriteStory(favoritedStory) {
@@ -235,20 +235,28 @@ class User {
     const token = this.loginToken;
 
     //create object containing token and user object
-    const tokenUserObject = { token, user: { favorites: this.favorites } };
+    const userData = { token, user: { favorites: this.favorites } };
 
     const response = await fetch(
-      `${BASE_URL}/users/${this.username}`,
+      `${BASE_URL}/users/${this.username}/favorites/${favoritedStory.storyId}`,
       {
-        method: "PATCH",
-        body: JSON.stringify(tokenUserObject),
+        method: "POST",
+        body: JSON.stringify(userData),
         headers: {
           "Content-Type": "application/json",
         },
       });
     const updatedUser = await response.json();
 
-    return updatedUser;
+    return updatedUser.message;
+  }
+
+  /** Input: story instance to unfavorite
+   *  remove story from user favorites
+   *  update server about deleted favorite
+   */
+  async removeFavoriteStory(unfavoritedStory) {
+
   }
 }
 
