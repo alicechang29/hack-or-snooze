@@ -37,7 +37,6 @@ class Story {
    */
 
   getHostName() {
-
     const url = new URL(this.url);
     console.log(url.hostname); // "www.example.com"
 
@@ -88,30 +87,30 @@ class StoryList {
    * Returns the new Story instance
    */
 
-
   async addStory(user, newStory) {
 
     //get user instance token (needed to post story)
     const token = user.loginToken;
 
     //create object containing token and story object
-    const tokenStoryObject = { token, story: newStory }; // => {token: "USER_TOKEN", story{...}}
+    const requestData = { token, story: newStory }; // => {token: "USER_TOKEN", story{...}}
 
     const response = await fetch(
       `${BASE_URL}/stories`,
       {
         method: "POST",
-        body: JSON.stringify(tokenStoryObject),
+        body: JSON.stringify(requestData),
         headers: {
           "Content-Type": "application/json",
         },
       });
 
 
-    const addedStory = await response.json();
-    console.log("addedStory", addedStory);
+    const storyData = await response.json();
+    console.log("addedStory", storyData);
 
-    const story = new Story(addedStory.story);
+    const story = new Story(storyData.story);
+    this.stories.unshift(story);
     console.log("story passed through story instance", story);
 
     return story;
@@ -247,10 +246,9 @@ class User {
           "Content-Type": "application/json",
         },
       });
+    const updatedUser = await response.json();
 
-    //returning a promise because not doing anything with the response
-    return response;
-
+    return updatedUser;
   }
 }
 
