@@ -121,3 +121,16 @@ let newStory = await currStoryList.addStory(currentUser,
 
 "loginToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMDYiLCJpYXQiOjE3MTM0NjIzNjJ9.4V-Gz9x7wVbpQny_jStJswVpiF385IUWS3iV73HcA_4",
 ```
+
+Bugs:
+- after submitting story, the submit story form does not disappear
+- we are not refreshing the story list correctly after form submission
+- pressed submit > page was not updating
+- but if refresh website, it works
+
+
+-fixing docstrings, var names, bootstrap form, hostname fn?
+
+
+Notes:
+- why to add a story to currStoryList when just adding to dom: need to add story to existing list bc might have functionality that relies on this later
