@@ -30,6 +30,7 @@ Notes:
     //  **not** an instance method. Rather, it is a method that is called on the
     //  class directly. Why doesn't it make sense for getStories to be an
     //  instance method?
+
 - it's static bc we never have to access the story list again after website is initially loaded
 - if only adding 1 new story, no need to get every single story again, just update DOM with that one story
 
@@ -40,7 +41,18 @@ Static = Static properties cannot be directly accessed on instances of the class
 - never want multiple story lists to exist
 - if it wasn't static, every time we add a story, a new story list would be created on the website
 
-Interacting with API
+***Factory method*** - a method on the class itself that calls itself to make an instance of the class
+- called Factory method bc it's building an instance
+- why should we make an instance just to make an instance?
+    - instead, make a method on the class itself so that we can create the actual story list that we are going to use
+
+How to decide to make a function static?
+- don't need a cat to make a cat
+- want to make a cat from the idea of a cat
+else, can pull out the function outside of the class but OO is to keep things grouped together
+
+
+**Interacting with API**
 
 UI.js:
 - reading form values and manipulating DOM
@@ -126,7 +138,7 @@ After favorite/unfavorite action:
 2. for removal, same selection process but find the index of that story on the array and remove it
     - array's index's value > find the matching storyID > remove the array value at that index
         - loop the array > find the story's object id key > check for matching id value at that array index, splice it out
-3. make a PATCH request to the server of the change on the user instance and send:
+3. make a POST request to the server of the change on the user instance and send:
     - token
     - user: {favoritesArray}
             - Note: no need to send other user key/values
@@ -165,11 +177,20 @@ let newStory = await currStoryList.addStory(currentUser,
   {title: "Test", author: "Me", url: "http://meow.com"});
 
 "loginToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMDYiLCJpYXQiOjE3MTM0NjIzNjJ9.4V-Gz9x7wVbpQny_jStJswVpiF385IUWS3iV73HcA_4",
+
+{updatedAt: '', storyId: '522667dd-8126-470f-af37-6fc8ab5d2253', title: 'Test', author: 'Me', url: 'http://meow.com'}
 ```
 - alternative approach for setting up testing:
 import: main, stories, user
     - no need to import models and have to re-enter user each time
 
+
+Steps for testing:
+1. declare a story in console
+let testStory = stories.currStoryList.stories[0]
+user.currentUser.favorites
+user.currentUser.addFavoriteStory(testStory)
+user.currentUser.removeFavoriteStory(testStory)
 
 
 FIXME:
@@ -187,3 +208,13 @@ Notes:
 
 TODO:
 - bootstrap submit story form
+
+
+Want to keep things together:
+- currStoryList belongs on models.js bc that is where the instance of that story list was born
+
+
+# QUESTIONS
+- in addFavoriteStory method in user class, we are awaiting the response but in the console, it is returning a Promise. Why is this happening?
+- why are we writing 2 methods for favorite/unfavorite? For both, we are updating the favorite list on the user
+    - only difference would be adding or removing the selected story from the favorites array

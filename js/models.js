@@ -257,6 +257,43 @@ class User {
    */
   async removeFavoriteStory(unfavoritedStory) {
 
+    //deleting story from internal memory
+    /*
+- array's index's value > find the matching storyID > remove the array value at that index
+        - loop the array > find the story's object id key > check for matching id value at that array index, splice it out
+    */
+
+    for (let i = 0; i < this.favorites.length; i++) {
+      const storyID = this.favorites[i].storyId;
+      console.log("unfavorited", unfavoritedStory);
+      console.log("remove loop", storyID, unfavoritedStory.story.storyID);
+      // unfavoritedStory.storyID is undefined
+
+      if (storyID === unfavoritedStory.storyID) {
+        console.log({ storyID });
+        this.favorites.splice(i, 1);
+        break;
+      }
+    }
+
+    const token = this.loginToken;
+
+    //create object containing token and user object
+    const userData = { token, user: { favorites: this.favorites } };
+
+    const response = await fetch(
+      `${BASE_URL}/users/${this.username}/favorites/${unfavoritedStory.storyId}`,
+      {
+        method: "DELETE",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    const updatedUser = await response.json();
+
+    return updatedUser.message;
+
   }
 }
 
