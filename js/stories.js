@@ -30,14 +30,16 @@ export function generateStoryMarkup(story) {
 
   // if a user is logged in, show favorite/not-favorite star
   const showStar = Boolean(currentUser);
-  let favoriteStatus = true;
+
+  //check if user favorites list includes story instance
+  let favoriteStatus = currentUser.isFavorite(story);
 
   //https://icons.getbootstrap.com/?q=star
   const $li = document.createElement("li");
   $li.id = story.storyId;
   $li.classList.add("Story", "mt-2");
   $li.innerHTML = `
-      <small class="Story-star d-none"><i class="bi bi-star"></i></small>
+      <small class="Story-star d-none bi bi-star"><i class=""></i></small>
       <a href="${story.url}" target="a_blank" class="Story-link">
         ${story.title}
       </a>
