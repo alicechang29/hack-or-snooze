@@ -133,17 +133,17 @@ story {
 story
 
 After favorite/unfavorite action:
-1. log the favorite story in the "favorite array" on the user (this is on the User class - constructor) by:
+1. log the favorite story in the "favorite array" on the user (this is on the User class - constructor) by: **DONE**
     - adding the current story selected onto the favorite array
-2. for removal, same selection process but find the index of that story on the array and remove it
+2. for removal, same selection process but find the index of that story on the array and remove it **DONE**
     - array's index's value > find the matching storyID > remove the array value at that index
         - loop the array > find the story's object id key > check for matching id value at that array index, splice it out
-3. make a POST request to the server of the change on the user instance and send:
+3. make a POST request to the server of the change on the user instance and send: **DONE**
     - token
     - user: {favoritesArray}
             - Note: no need to send other user key/values
 
-- save the favorites array every time it's changed, like however currentList is being saved
+- save the favorites array every time it's changed, like however currentList is being saved **DONE**
 
 
 UI Flow

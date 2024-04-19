@@ -30,24 +30,58 @@ export function generateStoryMarkup(story) {
 
   // if a user is logged in, show favorite/not-favorite star
   const showStar = Boolean(currentUser);
+  let favoriteStatus = true;
+
   //https://icons.getbootstrap.com/?q=star
   const $li = document.createElement("li");
   $li.id = story.storyId;
   $li.classList.add("Story", "mt-2");
   $li.innerHTML = `
-      <small class="Story-star"><i class="bi bi-star"></i></small>
+      <small class="Story-star d-none"><i class="bi bi-star"></i></small>
       <a href="${story.url}" target="a_blank" class="Story-link">
         ${story.title}
       </a>
       <small class="Story-hostname text-muted">(${hostName})</small>
       <small class="Story-author">by ${story.author}</small>
       <small class="Story-user d-block">posted by ${story.username}</small>
-      
+
     `;
+
+  if (showStar === true && favoriteStatus === true) {
+    //and story exists in favorites
+    $li.querySelector(".Story-star").classList.remove("d-none");
+    $li.querySelector(".Story-star").classList.remove("bi-star");
+    $li.querySelector(".Story-star").classList.add("bi-star-fill");
+  } else if (showStar === true && favoriteStatus === false) {
+    $li.querySelector(".Story-star").classList.remove("d-none");
+    $li.querySelector(".Story-star").classList.remove("bi-star-fill");
+    $li.querySelector(".Story-star").classList.add("bi-star");
+  }
+
+
+
+
   //if a user is logged in, add unfilled star symbol next to each story in list
   // currentUser ? add the star : dont add the star
+
+  /*
+  by default, have the star in the div but have it set to d-none
+
+  if logged in user:
+  - is the story on the favorite list
+  - if so, make it filled in star
+
+  if not, leave it as unfilled star
+  */
   return $li;
 }
+
+
+//NEXTSTEPS and didnt test stars yet
+//add event listener onto the story div
+//check if the click = the star's class
+// - run the addFavorite or removeFavorite function
+// - change the star to filled/unfilled
 
 
 
@@ -86,7 +120,7 @@ export async function fetchAndShowStoriesOnStart() {
 
 
 /** Gets values from the story form
- *  Calls generateStoryMarkup, adds the new story to the DOM 
+ *  Calls generateStoryMarkup, adds the new story to the DOM
  *  Clears form input values upon form submission
  *  Hides all page components, reveals story list
 */
