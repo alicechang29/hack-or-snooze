@@ -30,6 +30,7 @@ class Story {
     return new Story(storyData);
   }
 
+
   /** Parses hostname out of URL and returns it.
    *
    * http://foo.com/bar => foo.com
@@ -284,6 +285,15 @@ class User {
     const updatedUser = await response.json();
 
     return updatedUser.message;
+  }
+
+  isFavorite(story) {
+    for (let i = 0; i < this.favorites.length; i++) {
+      if (this.favorites[i].storyId === story.storyId) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
