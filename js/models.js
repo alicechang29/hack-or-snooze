@@ -225,6 +225,33 @@ class User {
       token,
     );
   }
+
+  /**Passing a story argument into the addFavoriteStory fn
+   * send a PATCH request to update the User instance
+   * with the updated favorite story
+   */
+  async addFavoriteStory(favoritedStory) {
+    this.favorites.push(favoritedStory);
+
+    const token = this.loginToken;
+
+    //create object containing token and user object
+    const tokenUserObject = { token, user: { favorites: this.favorites } };
+
+    const response = await fetch(
+      `${BASE_URL}/users/${this.username}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(tokenUserObject),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+    //returning a promise because not doing anything with the response
+    return response;
+
+  }
 }
 
 export { Story, StoryList, User, BASE_URL };

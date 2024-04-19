@@ -29,6 +29,7 @@ export function generateStoryMarkup(story) {
 
   // if a user is logged in, show favorite/not-favorite star
   const showStar = Boolean(currentUser);
+  //https://icons.getbootstrap.com/?q=star
   const $li = document.createElement("li");
   $li.id = story.storyId;
   $li.classList.add("Story", "mt-2");
@@ -42,6 +43,7 @@ export function generateStoryMarkup(story) {
     `;
   return $li;
 }
+
 
 
 /******************************************************************************
