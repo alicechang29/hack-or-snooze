@@ -6,6 +6,7 @@ class Story {
    */
 
   constructor({ storyId, title, author, url, username, createdAt }) {
+    console.log("story constructor", { storyId, title, author, url, username, createdAt });
     this.updatedAt = "";
     this.storyId = storyId;
     this.title = title;
@@ -36,8 +37,11 @@ class Story {
    */
 
   getHostName() {
-    // FIXME: complete this function!
-    return "hostname.com";
+
+    const url = new URL(this.url);
+    console.log(url.hostname); // "www.example.com"
+
+    return url.hostname;
   }
 }
 
@@ -89,24 +93,26 @@ class StoryList {
 
     //get user instance token (needed to post story)
     const token = user.loginToken;
+
+    //create object containing token and story object
     const tokenStoryObject = { token, story: newStory }; // => {token: "USER_TOKEN", story{...}}
 
-    //POST fetch request => method: POST, body: JSON stringify newStory
     const response = await fetch(
       `${BASE_URL}/stories`,
       {
         method: "POST",
-        //pass object into JSON.stringify method in the body
         body: JSON.stringify(tokenStoryObject),
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-    //create object containing token and story object
+
     const addedStory = await response.json();
-    console.log(addedStory);
-    const story = new Story(addedStory);
+    console.log("addedStory", addedStory);
+
+    const story = new Story(addedStory.story);
+    console.log("story passed through story instance", story);
 
     return story;
   }
