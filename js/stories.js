@@ -83,9 +83,10 @@ async function handleFavorites(evt) {
   // checking if story is on favorite list maybe goes here so we can add/remove from same fn
   if (!evt.target.matches(".Story-star")) return;
 
-  const storySelected = evt.target.closest("li");
-  const selectedStoryID = storySelected.getAttribute("id");
-  const selectedStory = Story.getStory(selectedStoryID);
+  const selectedStoryID = evt.target.closest("li").getAttribute("id");
+  console.log("storyID", selectedStoryID);
+  //const selectedStoryID = storySelected.getAttribute("id");
+  const selectedStory = await Story.getStory(selectedStoryID);
 
   //when click star, call addFavorite on the story that was clicked
   const addFavorite = await currentUser.addFavoriteStory(selectedStory);
