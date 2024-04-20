@@ -32,14 +32,14 @@ export function generateStoryMarkup(story) {
   const showStar = Boolean(currentUser);
 
   //check if user favorites list includes story instance
-  let favoriteStatus = currentUser.isFavorite(story);
+  let favoriteStatus = currentUser.isFavorite(story); //FIXME: can change to const
 
   //https://icons.getbootstrap.com/?q=star
   const $li = document.createElement("li");
   $li.id = story.storyId;
   $li.classList.add("Story", "mt-2");
   $li.innerHTML = `
-      <small class="Story-star d-none bi bi-star"><i class=""></i></small>
+      <small class="Story-star d-none bi bi-star"></small>
       <a href="${story.url}" target="a_blank" class="Story-link">
         ${story.title}
       </a>
@@ -49,9 +49,9 @@ export function generateStoryMarkup(story) {
 
     `;
 
-  if (showStar === true && favoriteStatus === true) {
+  if (showStar === true && favoriteStatus === true) { //FIXME: rename to isFavoriteStatus
     //and story exists in favorites
-    $li.querySelector(".Story-star").classList.remove("d-none");
+    $li.querySelector(".Story-star").classList.remove("d-none"); //FIXME: classList can take multiple arguments - cleanup
     $li.querySelector(".Story-star").classList.remove("bi-star");
     $li.querySelector(".Story-star").classList.add("bi-star-fill");
   } else if (showStar === true && favoriteStatus === false) {
@@ -78,11 +78,14 @@ export function generateStoryMarkup(story) {
   return $li;
 }
 
+//TODO: docstring
 async function handleFavorites(evt) {
   // checking if story is on favorite list maybe goes here so we can add/remove from same fn
   if (!evt.target.matches(".Story-star")) return;
 
   const storySelected = evt.target.closest("li"); //we are setting it to html div that has star
+  console.log("id", storySelected.getAttribute("id"));
+  //TODO: there is an ID method on the DOM
   //grab the id out of "storySelected", pass to getStory fn > get back story instance
   console.log("storySelected", storySelected);
 
