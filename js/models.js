@@ -242,7 +242,7 @@ class User {
       `${BASE_URL}/users/${this.username}/favorites/${favoritedStory.storyId}`,
       {
         method: "POST",
-        body: JSON.stringify(userData),
+        body: JSON.stringify({ token }),
         headers: {
           "Content-Type": "application/json",
         },
