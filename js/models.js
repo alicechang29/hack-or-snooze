@@ -231,7 +231,7 @@ class User {
    * with the updated favorite story
    */
   async addFavoriteStory(favoritedStory) {
-    this.favorites.push(favoritedStory);
+    this.favorites.push(favoritedStory); //FIXME: do this after sending to API for future error handling and out of sync
 
     const token = this.loginToken;
 
@@ -239,10 +239,10 @@ class User {
     const userData = { token, user: { favorites: this.favorites } };
 
     const response = await fetch(
-      `${BASE_URL}/users/${this.username}/favorites/${favoritedStory.storyId}`,
+      `${BASE_URL}/users/${this.username}/favorites/${favoritedStory.storyId}`, //FIXME: this is not matching API spec
       {
         method: "POST",
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token }), //FIXME: this is not matching API spec (just send token)
         headers: {
           "Content-Type": "application/json",
         },
@@ -258,6 +258,7 @@ class User {
    */
   async removeFavoriteStory(unfavoritedStory) {
 
+    //FIXME: use an array method
     //find matching ID and delete from internal favorites list
     for (let i = 0; i < this.favorites.length; i++) {
       const storyID = this.favorites[i].storyId;
@@ -274,10 +275,10 @@ class User {
     const userData = { token, user: { favorites: this.favorites } };
 
     const response = await fetch(
-      `${BASE_URL}/users/${this.username}/favorites/${unfavoritedStory.storyId}`,
+      `${BASE_URL}/users/${this.username}/favorites/${unfavoritedStory.storyId}`, //FIXME: doesn't match api spec
       {
         method: "DELETE",
-        body: JSON.stringify(userData),
+        body: JSON.stringify(userData),//FIXME: doesn't match api spec
         headers: {
           "Content-Type": "application/json",
         },
@@ -289,7 +290,8 @@ class User {
 
   /** returns true/false if the story instance exists in the user's favorites list
    */
-  isFavorite(story) {
+  isFavorite(story) { //FIXME: rename to checkIsFavorite
+    //FIXME: use array method
     for (let i = 0; i < this.favorites.length; i++) {
       if (this.favorites[i].storyId === story.storyId) {
         return true;
